@@ -3,45 +3,40 @@
 <head>
     <meta charset="utf-8">
     <title>S3 Example Static Only</title>
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+
 </head>
 <body>
 <header>
-    {% block content %}
-        <h2>Public Uploads</h2>
-        <h3>Upload to Amazon S3</h3>
+    <div class="frame">
+        <div class="center">
+            <div class="title">
+                <h1>Drop file to upload</h1>
+            </div>
 
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Upload</button>
-        </form>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for f in form %}
+                    <div class="dropzone">
+                        <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon"/>
+                        {{ f }}
+                    </div>
 
-        <p><a href="{% url 'index' %}">Return to home</a></p>
+                {% endfor %}
+                <br>
+                <button type="submit" class="btn" name="uploadbutton">Upload file</button>
+            </form>
 
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Uploaded at</th>
-                <th>Size</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for document in documents %}
-                <tr>
-                    <td><a href="{{ document.upload.url }}" target="_blank">{{ document.upload.name }}</a></td>
-                    <td>{{ document.uploaded_at }}</td>
-                    <td>{{ document.upload.size|filesizeformat }}</td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="3">No data.</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endblock %}
+
+        </div>
+    </div>
+
+
+    <a class="btn" href="{{ '/' }}" role="button"
+       style="background-color: #1d3557;color: white"><h1 style="color: white">Back</h1></a>
+
+
 </header>
 <main>
 
@@ -49,4 +44,33 @@
 
 </body>
 </html>
+<style>
+    a {
+        text-decoration: none;
+        appearance: button;
+        -webkit-writing-mode: horizontal-tb !important;
+        text-rendering: auto;
+        color: -internal-light-dark(buttontext, rgb(170, 170, 170));
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-transform: none;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: center;
+        align-items: flex-start;
+        cursor: default;
+        background-color: -internal-light-dark(rgb(239, 239, 239), rgb(74, 74, 74));
+        box-sizing: border-box;
+        margin: 0em;
+        font: 400 13.3333px Arial;
+        padding: 1px 6px;
+        border-width: 2px;
+        border-style: outset;
+        border-color: -internal-light-dark(rgb(118, 118, 118), rgb(195, 195, 195));
+        border-image: initial;
+    }
+
+</style>
+
 

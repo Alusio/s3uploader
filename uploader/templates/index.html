@@ -1,17 +1,108 @@
 {% load static %}<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>S3 Example Static Only</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+    <meta charset="utf-8">
+    <title>S3 Example Static Only</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-  <header>
-    <h1>S3 Example Static Only</h1>
-  </header>
-  <main>
+<header>
+    <div class="section">
 
-  </main>
+        <div class="container">
+            <div class="mt-5">
+                <div class="row justify-content-center">
+                    <h1>S3Uploader</h1>
+                </div>
+                <div class="mt-5">
+                    <div class="row justify-content-center">
+                        <a class="btn" href="{{ 'upload' }}" role="button"
+                           style="background-color: #1d3557;color: white"><p style="font-size: 1.2em">Upload page</p>
+                        </a>
+                    </div>
+
+                    <div class="mt-5">
+
+                        <div class="mt-5">
+                            <div class="mt-5">
+                                <div class="row justify-content-center">
+
+                                    <div class="col-md-12 col-sm-3">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Copy</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for doc in documents %}
+                                                <tr>
+
+                                                    <td>
+                                                        <h5>
+                                                            <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
+                                                               style="color: #e63946">{{ doc.upload|truncatechars:10 }}</a>
+                                                        </h5>
+                                                    </td>
+                                                    <td><h5>{{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5></td>
+                                                    <td>
+                                                        <button onclick="setClipboard('https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}')"
+                                                                class="btn"
+                                                                style="background-color: #457b9d;color: white">Copy url
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+</header>
+<main>
+
+</main>
 
 </body>
 </html>
+<style>
+    body {
+        background: #edf6f9;
+    }
+
+    .btn {
+        display: block;
+        width: 140px;
+        height: 40px;
+        background: #1d3557;
+        color: #fff;
+        border-radius: 3px;
+        border: 0;
+        box-shadow: 0 3px 0 0 #a8dadc;
+        transition: all 0.3s ease-in-out;
+        font-size: 14px;
+    }
+
+    .btn:hover {
+        background: #1d3557;
+        box-shadow: 0 3px 0 0 #457b9d;
+    }
+</style>
+<script>
+    function setClipboard(value) {
+        var tempInput = document.createElement("input");
+        tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+        tempInput.value = value;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+    }
+</script>
