@@ -10,7 +10,6 @@ from django.urls import reverse_lazy
 from django.core.files.storage import FileSystemStorage
 import boto3
 
-
 @login_required
 @transaction.atomic
 def index(request):
