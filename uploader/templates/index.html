@@ -11,58 +11,63 @@
 
         <div class="container">
             <div class="mt-5">
-                <div class="row justify-content-center">
-                    <h1>S3Uploader</h1>
-                </div>
+            </div>
+            <div class="row justify-content-center">
+                <h1>S3Uploader</h1>
+            </div>
+            <div class="mt-5">
+            </div>
+            <div class="row justify-content-center">
+                <a class="btn" href="{{ 'upload' }}" role="button"
+                   style="background-color: #1d3557;color: white"><p style="font-size: 1.2em">Upload page</p>
+                </a>
+            </div>
+
+            <div class="mt-5">
+            </div>
+            <div class="mt-5">
                 <div class="mt-5">
                     <div class="row justify-content-center">
-                        <a class="btn" href="{{ 'upload' }}" role="button"
-                           style="background-color: #1d3557;color: white"><p style="font-size: 1.2em">Upload page</p>
-                        </a>
-                    </div>
 
-                    <div class="mt-5">
+                        <div class="col-md-12 col-sm-3">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Copy</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for doc in documents %}
+                                    <tr>
 
-                        <div class="mt-5">
-                            <div class="mt-5">
-                                <div class="row justify-content-center">
+                                        <td>
+                                            <h5>
+                                                <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
+                                                   style="color: #e63946">{{ doc.upload|truncatechars:10 }}</a>
+                                            </h5>
+                                        </td>
+                                        <td><h5>{{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5></td>
+                                        <td>
+                                            <button onclick="setClipboard('https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}')"
+                                                    class="btn" id='btn'
+                                                    style="background-color: #457b9d;color: white">Copy url
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
 
-                                    <div class="col-md-12 col-sm-3">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Copy</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for doc in documents %}
-                                                <tr>
-
-                                                    <td>
-                                                        <h5>
-                                                            <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
-                                                               style="color: #e63946">{{ doc.upload|truncatechars:10 }}</a>
-                                                        </h5>
-                                                    </td>
-                                                    <td><h5>{{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5></td>
-                                                    <td>
-                                                        <button onclick="setClipboard('https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}')"
-                                                                class="btn"
-                                                                style="background-color: #457b9d;color: white">Copy url
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
+                                </tbody>
+                            </table>
                         </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </header>
@@ -104,5 +109,8 @@
         tempInput.select();
         document.execCommand("copy");
         document.body.removeChild(tempInput);
+        var property = document.getElementById('btn');
+        property.style.backgroundColor = "#66cc66";
+        property.textContent = "Copied !"
     }
 </script>
