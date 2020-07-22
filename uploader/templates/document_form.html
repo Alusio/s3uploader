@@ -7,13 +7,15 @@
 </head>
 <body>
 <header>
-    <a class="btn" href="{{ '/' }}" role="button"
-       style="background-color: #16a085;color: white; text-decoration: none;border-bottom: 4px solid #117A60 !important;">
-        <h3 style="color: white"><img
-                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/backhand-index-pointing-left_1f448.png"
-                width="40vw">
-        </h3>
-    </a>
+    <div style="margin-top: 10px;margin-left: 10px">
+        <a class="btn" href="{{ '/' }}" role="button"
+           style="background-color: #16a085;color: white; text-decoration: none;border-bottom: 4px solid #117A60 !important;">
+            <h3 style="color: white"><img
+                    src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/backhand-index-pointing-left_1f448.png"
+                    width="40vw">
+            </h3>
+        </a>
+    </div>
     <div class="section">
 
         <div class="container">
@@ -33,12 +35,17 @@
                         </div>
                         <br>
                         <div class="row justify-content-center">
+
                             <div class="col-md-3">
-                                <button type="submit" class="btn" name="uploadbutton"><img
-                                        src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/thumbs-up_1f44d.png"
-                                        width="30vw"></button>
+
+                                <button type="submit" class="btn" name="uploadbutton" onclick="uploadInfo()"
+                                        id="uploadbtn">
+                                    <img
+                                            src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/thumbs-up_1f44d.png"
+                                            width="30vw"></button>
                             </div>
                         </div>
+
                     </form>
                 </div>
 
@@ -122,6 +129,12 @@
             $('form p').text(this.files.length + " file(s) selected");
         });
     });
+</script>
+<script>
+    function uploadInfo() {
+        console.log("test");
+        document.getElementById('uploadbtn').style.visibility = 'hidden';
+    }
 </script>
 
 

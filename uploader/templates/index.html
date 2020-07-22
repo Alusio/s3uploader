@@ -7,9 +7,13 @@
 </head>
 <body>
 <header>
-    <a class="btn" href="{{ 'accounts/logout' }}" role="button"
-       style="background-color: #8E0000;color: white"><p style="font-size: 1.2em">Logout</p>
-    </a>
+    <div style="margin-top: 10px;margin-left: 10px">
+        <a class="btn" href="{{ 'accounts/logout' }}" role="button"
+           style="background-color: transparent;color: white; width: 100px;height: 50px; box-shadow: unset"><h3><img
+                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/waving-hand_1f44b.png"
+                width="40vw"></h3>
+        </a>
+    </div>
     <div class="section">
 
         <div class="container">
@@ -40,6 +44,8 @@
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Device</th>
                                     <th scope="col">Copy</th>
                                 </tr>
                                 </thead>
@@ -50,13 +56,15 @@
                                         <td>
                                             <h5>
                                                 <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
-                                                   style="color: #e63946; text-decoration: none">{{ doc.upload|truncatechars:10 }}</a>
+                                                   style="color: #e63946; text-decoration: none">{{ doc.upload|truncatechars:15 }}</a>
                                                 <img
                                                         src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
                                                         width="20vw">
                                             </h5>
                                         </td>
                                         <td><h5>{{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5></td>
+                                        <td><h5>{{ doc.user }}</h5></td>
+                                        <td><h5>{{ doc.device }}</h5></td>
                                         <td>
                                             <button onclick="setClipboard('https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}')"
                                                     class="btn" id='btn'

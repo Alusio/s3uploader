@@ -17,12 +17,11 @@ def index(request):
 @login_required
 def upload(request):
     if request.method == 'POST':
-
         form = UploadFileForm(request.POST, request.FILES)
         files = request.FILES.getlist('upload')
         if form.is_valid():
             for file in files:
-                doc = Document(upload=file)
+                doc = Document(upload=file, user=request.user, device=getOS(request))
                 doc.save()
             return redirect('index')
     else:
@@ -30,3 +29,22 @@ def upload(request):
     return render(request, 'document_form.html', {
         'form': form,
         'title': settings.NAME})
+
+
+def getOS(request):
+    if request.Windows:
+        return "Windows"
+    elif request.Linux:
+        return "Linux"
+    elif request.iMac:
+        return "iMac"
+    elif request.iPhone:
+        return "iPhone"
+    elif request.iPad:
+        return "iPad"
+    elif request.iPod:
+        return "iPod"
+    elif request.Android:
+        return "Android"
+    else:
+        return "NaN"
