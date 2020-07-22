@@ -1,0 +1,44 @@
+version: '3.3'
+
+services:
+  web:
+    build: ./
+    image: s3uploader:1.0.0
+    links:
+      - db:db
+    command: gunicorn s3uploader.wsgi:application --timeout 120 --bind 0.0.0.0:81
+    volumes:
+      - static_volume_pdf:/code/blog/static
+    expose:
+      - 81
+    env_file: var.env
+    depends_on:
+      - db
+    networks:
+      - traefik_default
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.web2.entrypoints=websecure"
+        - "traefik.http.routers.web2.rule=Host(`www.puydinfo.fr`)"
+        - "traefik.http.routers.web2.tls.certresolver=myhttpchallenge"
+        - "traefik.http.services.web2.loadbalancer.server.port=81"
+
+  db:
+    image: postgres:11.5-alpine
+    volumes:
+      - postgres_data_pdf:/var/lib/postgresql/data/
+    env_file: var.env.db
+    networks:
+      - traefik_default
+
+
+
+
+volumes:
+  postgres_data_pdf:
+  static_volume_pdf:
+
+networks:
+  traefik_default:
+    external: true
