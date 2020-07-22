@@ -1,24 +1,50 @@
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.shortcuts import render, redirect
 
+from s3uploader import settings
 from .forms import UploadFileForm
 from .models import Document
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from django.core.files.storage import FileSystemStorage
 
+
+@login_required
+@transaction.atomic
 def index(request):
-    return render(request, 'index.html')
+    documents = Document.objects.order_by('-uploaded_at').all()[:30]
+    return render(request, 'index.html', {'documents': documents, 'title': settings.NAME})
 
 
+@login_required
 def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
-        print(form)
+        files = request.FILES.getlist('upload')
         if form.is_valid():
-            form.save()
+            for file in files:
+                doc = Document(upload=file, user=request.user, device=getOS(request))
+                doc.save()
             return redirect('index')
     else:
         form = UploadFileForm()
     return render(request, 'document_form.html', {
-        'form': form
-    })
+        'form': form,
+        'title': settings.NAME})
+
+
+def getOS(request):
+    if request.Windows:
+        return "Windows"
+    elif request.Linux:
+        return "Linux"
+    elif request.iMac:
+        return "iMac"
+    elif request.iPhone:
+        return "iPhone"
+    elif request.iPad:
+        return "iPad"
+    elif request.iPod:
+        return "iPod"
+    elif request.Android:
+        return "Android"
+    else:
+        return "NaN"

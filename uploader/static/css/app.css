@@ -1,33 +1,90 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
+
 body {
-  margin: 0;
-  background-color: #f1f1f1;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #edf6f9;
 }
 
-.container {
-  width: 80%;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  padding: 20px;
-  margin: 40px auto;
+.frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    margin-top: -200px;
+    margin-left: -200px;
+    border-radius: 2px;
+    box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: linear-gradient(to top right, #1d3557 0%, #457b9d 100%);
+    color: #333;
+    font-family: "Open Sans", Helvetica, sans-serif;
 }
 
-form {
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ff9900;
-  width: 350px;
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 260px;
+    border-radius: 3px;
+    box-shadow: 8px 10px 15px 0 rgba(0, 0, 0, 0.2);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
 }
-table {
-  border-collapse: collapse;
-  width: 100%;
+
+.title {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #999;
+    text-align: center;
 }
-table td,
-table th {
-  border: 1px solid #eceeef;
-  padding: 5px 8px;
-  text-align: left;
+
+h1 {
+    font-size: 16px;
+    font-weight: 300;
+    color: #666;
 }
-table thead {
-  border-bottom: 2px solid #eceeef;
+
+.dropzone {
+    width: 100px;
+    height: 80px;
+    border: 1px dashed #999;
+    border-radius: 3px;
+    text-align: center;
+    margin: auto;
+}
+
+.upload-icon {
+    margin: 25px 2px 2px 2px;
+}
+
+.upload-input {
+    position: relative;
+    top: -62px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.btn {
+    display: block;
+    width: 140px;
+    height: 40px;
+    background: #1d3557;
+    color: #fff;
+    border-radius: 3px;
+    border: 0;
+    box-shadow: 0 3px 0 0 #a8dadc;
+    transition: all 0.3s ease-in-out;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background: #1d3557;
+    box-shadow: 0 3px 0 0 #457b9d;
 }
