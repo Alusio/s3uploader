@@ -10,7 +10,7 @@ from .models import Document
 @login_required
 @transaction.atomic
 def index(request):
-    documents = Document.objects.all()
+    documents = Document.objects.order_by('-uploaded_at').all()[:30]
     return render(request, 'index.html', {'documents': documents, 'title': settings.NAME})
 
 

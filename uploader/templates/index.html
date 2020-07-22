@@ -56,7 +56,9 @@
                                         <td>
                                             <h5>
                                                 <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
-                                                   style="color: #e63946; text-decoration: none">{{ doc.upload|truncatechars:15 }}</a>
+                                                   style="color: #e63946; text-decoration: none" data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="{{ doc.upload }}">{{ doc.upload|truncatechars:15 }}</a>
                                                 <img
                                                         src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
                                                         width="20vw">
@@ -129,4 +131,8 @@
         property.style.backgroundColor = "#66cc66";
         property.textContent = "Copied !"
     }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
