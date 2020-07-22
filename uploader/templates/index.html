@@ -45,7 +45,10 @@
                                         <td>
                                             <h5>
                                                 <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
-                                                   style="color: #e63946">{{ doc.upload|truncatechars:10 }}</a>
+                                                   style="color: #e63946; text-decoration: none">{{ doc.upload|truncatechars:10 }}</a>
+                                                <img
+                                                        src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
+                                                        width="20vw">
                                             </h5>
                                         </td>
                                         <td><h5>{{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5></td>
