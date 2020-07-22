@@ -5,10 +5,7 @@ from django.shortcuts import render, redirect
 from s3uploader import settings
 from .forms import UploadFileForm
 from .models import Document
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from django.core.files.storage import FileSystemStorage
-import boto3
+
 
 @login_required
 @transaction.atomic
@@ -20,9 +17,13 @@ def index(request):
 @login_required
 def upload(request):
     if request.method == 'POST':
+
         form = UploadFileForm(request.POST, request.FILES)
+        files = request.FILES.getlist('upload')
         if form.is_valid():
-            form.save()
+            for file in files:
+                doc = Document(upload=file)
+                doc.save()
             return redirect('index')
     else:
         form = UploadFileForm()

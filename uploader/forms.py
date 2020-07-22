@@ -5,13 +5,7 @@ from uploader.models import Document
 
 
 class UploadFileForm(forms.ModelForm):
+    upload = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
         model = Document
         fields = ('upload',)
-
-    def __init__(self, *args, **kwargs):
-        super(UploadFileForm, self).__init__(*args, **kwargs)
-        self.fields['upload'].widget.attrs \
-            .update({
-            'class': 'upload-input'
-        })
