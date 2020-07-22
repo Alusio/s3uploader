@@ -15,7 +15,7 @@ import boto3
 @transaction.atomic
 def index(request):
     documents = Document.objects.all()
-    return render(request, 'index.html', {'documents': documents})
+    return render(request, 'index.html', {'documents': documents, 'title': settings.NAME})
 
 
 @login_required
@@ -28,5 +28,5 @@ def upload(request):
     else:
         form = UploadFileForm()
     return render(request, 'document_form.html', {
-        'form': form
-    })
+        'form': form,
+        'title': settings.NAME})
