@@ -26,9 +26,30 @@
             <div class="mt-5">
             </div>
             <div class="row justify-content-center">
-                <a class="btn" href="{{ 'upload' }}" role="button"
-                   style="background-color: #1d3557;color: white; width: unset"><p style="font-size: 1.2em">Upload
-                    something</p>
+                <a class="btn" href="{{ 'upload/document' }}" role="button"
+                   style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
+                        style="font-size: 1.2em">Upload
+                    Document</p>
+                </a>
+                <a class="btn" href="{{ 'upload/audio' }}" role="button"
+                   style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
+                        style="font-size: 1.2em">Upload
+                    Audio</p>
+                </a>
+                <a class="btn" href="{{ 'upload/video' }}" role="button"
+                   style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
+                        style="font-size: 1.2em">Upload
+                    Video</p>
+                </a>
+                <a class="btn" href="{{ 'upload/zip' }}" role="button"
+                   style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
+                        style="font-size: 1.2em">Upload
+                    Zip</p>
+                    <a class="btn" href="{{ 'upload/picture' }}" role="button"
+                       style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
+                            style="font-size: 1.2em">Upload
+                        Picture</p>
+                    </a>
                 </a>
             </div>
 
@@ -58,7 +79,7 @@
                                                 <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
                                                    style="color: #e63946; text-decoration: none" data-toggle="tooltip"
                                                    data-placement="top"
-                                                   title="{{ doc.upload }}">{{ doc.upload|truncatechars:20 }}</a>
+                                                   title="{{ doc.name }}">{{ doc.name|truncatechars:20 }}</a>
                                                 <img
                                                         src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
                                                         width="20vw">
@@ -68,8 +89,8 @@
                                         <td><h5>{{ doc.user }}</h5></td>
                                         <td><h5>{{ doc.device }}</h5></td>
                                         <td>
-                                            <button onclick="setClipboard('https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}')"
-                                                    class="btn" id='btn'
+                                            <button onclick="setClipboard('{{ doc.upload }}')"
+                                                    class="btn" id='{{ doc.upload }}'
                                                     style="background-color: #457b9d;color: white">Copy url
                                             </button>
                                         </td>
@@ -118,16 +139,17 @@
         box-shadow: 0 3px 0 0 #457b9d;
     }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function setClipboard(value) {
         var tempInput = document.createElement("input");
         tempInput.style = "position: absolute; left: -1000px; top: -1000px";
-        tempInput.value = value;
+        tempInput.value = 'https://uploader.s3.fr-par.scw.cloud/media/' + value;
         document.body.appendChild(tempInput);
         tempInput.select();
         document.execCommand("copy");
         document.body.removeChild(tempInput);
-        var property = document.getElementById('btn');
+        var property = document.getElementById(value);
         property.style.backgroundColor = "#66cc66";
         property.textContent = "Copied !"
     }

@@ -3,8 +3,8 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 
 from s3uploader import settings
-from .forms import UploadFileForm
-from .models import Document
+from .forms import DocumentForm, AudioForm, VideoForm, ZipForm, PictureForm
+from .models import Document, Audio, Video, Zip, Picture
 
 
 @login_required
@@ -15,17 +15,47 @@ def index(request):
 
 
 @login_required
-def upload(request):
+def upload(request, type):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        if type == "audio":
+            form = AudioForm(request.POST, request.FILES)
+        elif type == "video":
+            form = VideoForm(request.POST, request.FILES)
+        elif type == "zip":
+            form = ZipForm(request.POST, request.FILES)
+        elif type == "picture":
+            form = PictureForm(request.POST, request.FILES)
+        else:
+            form = DocumentForm(request.POST, request.FILES)
         files = request.FILES.getlist('upload')
         if form.is_valid():
             for file in files:
-                doc = Document(upload=file, user=request.user, device=getOS(request))
+                print(file)
+                if type == "audio":
+                    doc = Audio(upload=file, user=request.user, device=getOS(request), name=file)
+                elif type == "video":
+                    doc = Video(upload=file, user=request.user, device=getOS(request), name=file)
+                elif type == "zip":
+                    doc = Zip(upload=file, user=request.user, device=getOS(request), name=file)
+                elif type == "picture":
+                    doc = Picture(upload=file, user=request.user, device=getOS(request), name=file)
+                else:
+                    doc = Document(upload=file, user=request.user, device=getOS(request), name=file)
+
                 doc.save()
             return redirect('index')
     else:
-        form = UploadFileForm()
+        if type == "audio":
+            form = AudioForm()
+        elif type == "video":
+            form = VideoForm()
+        elif type == "zip":
+            form = ZipForm()
+        elif type == "picture":
+            form = PictureForm()
+        else:
+            form = DocumentForm()
+
     return render(request, 'document_form.html', {
         'form': form,
         'title': settings.NAME})
