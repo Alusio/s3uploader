@@ -11,7 +11,13 @@ from .models import Document, Audio, Video, Zip, Picture
 @transaction.atomic
 def index(request):
     documents = Document.objects.order_by('-uploaded_at').all()[:30]
-    return render(request, 'index.html', {'documents': documents, 'title': settings.NAME})
+    audios = Audio.objects.order_by('-uploaded_at').all()[:30]
+    videos = Video.objects.order_by('-uploaded_at').all()[:30]
+    zips = Zip.objects.order_by('-uploaded_at').all()[:30]
+    pictures = Picture.objects.order_by('-uploaded_at').all()[:30]
+    return render(request, 'index.html',
+                  {'documents': documents, 'audios': audios, 'videos': videos, 'zips': zips, 'pictures': pictures,
+                   'title': settings.NAME})
 
 
 @login_required

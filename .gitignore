@@ -9,3 +9,5 @@ venv2
 media
 # Project exclude paths
 /venv/
+/s3uploader/settings.py
+/docker-compose.yml

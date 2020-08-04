@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>{{ title }} - Home</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <header>
@@ -15,99 +16,263 @@
         </a>
     </div>
     <div class="section">
-
         <div class="container">
-
-            <div class="mt-5">
-            </div>
-            <div class="row justify-content-center">
-                <h1>{{ title }}</h1>
-            </div>
-            <div class="mt-5">
-            </div>
-            <div class="row justify-content-center">
-                <a class="btn" href="{{ 'upload/document' }}" role="button"
-                   style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
-                        style="font-size: 1.2em">Upload
-                    Document</p>
-                </a>
-                <a class="btn" href="{{ 'upload/audio' }}" role="button"
-                   style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
-                        style="font-size: 1.2em">Upload
-                    Audio</p>
-                </a>
-                <a class="btn" href="{{ 'upload/video' }}" role="button"
-                   style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
-                        style="font-size: 1.2em">Upload
-                    Video</p>
-                </a>
-                <a class="btn" href="{{ 'upload/zip' }}" role="button"
-                   style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
-                        style="font-size: 1.2em">Upload
-                    Zip</p>
-                    <a class="btn" href="{{ 'upload/picture' }}" role="button"
-                       style="background-color: #1d3557;color: white; width: unset; margin-right: 5px;"><p
-                            style="font-size: 1.2em">Upload
-                        Picture</p>
-                    </a>
-                </a>
-            </div>
-
-            <div class="mt-5">
-            </div>
-            <div class="mt-5">
-                <div class="mt-5">
-                    <div class="row justify-content-center">
-
-                        <div class="col-md-12 col-sm-3">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">User</th>
-                                    <th scope="col">Device</th>
-                                    <th scope="col">Copy</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for doc in documents %}
-                                    <tr>
-
-                                        <td>
-                                            <h5>
-                                                <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
-                                                   style="color: #e63946; text-decoration: none" data-toggle="tooltip"
-                                                   data-placement="top"
-                                                   title="{{ doc.name }}">{{ doc.name|truncatechars:20 }}</a>
-                                                <img
-                                                        src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
-                                                        width="20vw">
-                                            </h5>
-                                        </td>
-                                        <td><h5>{{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5></td>
-                                        <td><h5>{{ doc.user }}</h5></td>
-                                        <td><h5>{{ doc.device }}</h5></td>
-                                        <td>
-                                            <button onclick="setClipboard('{{ doc.upload }}')"
-                                                    class="btn" id='{{ doc.upload }}'
-                                                    style="background-color: #457b9d;color: white">Copy url
-                                            </button>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-
-                                </tbody>
-                            </table>
-                        </div>
-
-
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    <div class="row justify-content-md-center">
+                        <h1 style="font-weight: 100;">{{ title }}</h1>
                     </div>
                 </div>
+
+            </div>
+            <br>
+            <div class="row justify-content-md-center">
+                <div class="col-6 col-lg-auto">
+                    <a class="button" href="{{ 'upload/document' }}" role="button"
+                       style="margin-right: 5px;"><p
+                            style="font-size: 1.2em">Document</p>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-auto">
+                    <a class="button" href="{{ 'upload/audio' }}" role="button"
+                       style="margin-right: 5px;"><p
+                            style="font-size: 1.2em">Audio</p>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-auto">
+                    <a class="button" href="{{ 'upload/video' }}" role="button"
+                       style="margin-right: 5px;"><p
+                            style="font-size: 1.2em">Video</p>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-auto">
+                    <a class="button" href="{{ 'upload/zip' }}" role="button"
+                       style="margin-right: 5px;"><p
+                            style="font-size: 1.2em">Zip</p>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-auto">
+                    <a class="button" href="{{ 'upload/picture' }}" role="button"
+                       style="margin-right: 5px;"><p
+                            style="font-size: 1.2em">Picture</p>
+                    </a>
+                </div>
+            </div>
+            <br>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    <div class="row justify-content-md-center">
+                        <h2 style="font-weight: 100;">Documents</h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    {% for doc in documents %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>
+                                    <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
+                                       style="color: #e63946; text-decoration: none" data-toggle="tooltip"
+                                       data-placement="top"
+                                       title="{{ doc.name }}">{{ doc.name|truncatechars:25 }}</a>
+                                    <img
+                                            src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
+                                            width="20vw">
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <button onclick="setClipboard('{{ doc.upload }}')"
+                                        class="button" id='{{ doc.upload }}'
+                                        style="background-color: #457b9d; width: 150px; height: 40px">Copy
+                                    url
+                                </button>
+                                <hr>
+                                <h5>Date : {{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5>
+                                <h5>User : {{ doc.user }}</h5>
+                                <h5>Device : {{ doc.device }}</h5>
+
+
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    <div class="row justify-content-md-center">
+                        <h2 style="font-weight: 100;">Zips</h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+
+                <div class="col-md-12 col-lg-6">
+                    {% for doc in zips %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>
+                                    <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
+                                       style="color: #e63946; text-decoration: none" data-toggle="tooltip"
+                                       data-placement="top"
+                                       title="{{ doc.name }}">{{ doc.name|truncatechars:25 }}</a>
+                                    <img
+                                            src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
+                                            width="20vw">
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <button onclick="setClipboard('{{ doc.upload }}')"
+                                        class="button" id='{{ doc.upload }}'
+                                        style="background-color: #457b9d; width: 150px; height: 40px">Copy
+                                    url
+                                </button>
+                                <hr>
+                                <h5>Date : {{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5>
+                                <h5>User : {{ doc.user }}</h5>
+                                <h5>Device : {{ doc.device }}</h5>
+
+
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    <div class="row justify-content-md-center">
+                        <h2 style="font-weight: 100;">Pictures</h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+
+                <div class="col-md-12 col-lg-6">
+                    {% for doc in pictures %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>
+                                    <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
+                                       style="color: #e63946; text-decoration: none" data-toggle="tooltip"
+                                       data-placement="top"
+                                       title="{{ doc.name }}">{{ doc.name|truncatechars:25 }}</a>
+                                    <img
+                                            src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
+                                            width="20vw">
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <button onclick="setClipboard('{{ doc.upload }}')"
+                                        class="button" id='{{ doc.upload }}'
+                                        style="background-color: #457b9d; width: 150px; height: 40px">Copy
+                                    url
+                                </button>
+                                <hr>
+                                <h5>Date : {{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5>
+                                <h5>User : {{ doc.user }}</h5>
+                                <h5>Device : {{ doc.device }}</h5>
+
+
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    <div class="row justify-content-md-center">
+                        <h2 style="font-weight: 100;">Audios</h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    {% for doc in audios %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>
+                                    <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
+                                       style="color: #e63946; text-decoration: none" data-toggle="tooltip"
+                                       data-placement="top"
+                                       title="{{ doc.name }}">{{ doc.name|truncatechars:25 }}</a>
+                                    <img
+                                            src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
+                                            width="20vw">
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <button onclick="setClipboard('{{ doc.upload }}')"
+                                        class="button" id='{{ doc.upload }}'
+                                        style="background-color: #457b9d; width: 150px; height: 40px">Copy
+                                    url
+                                </button>
+                                <hr>
+                                <h5>Date : {{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5>
+                                <h5>User : {{ doc.user }}</h5>
+                                <h5>Device : {{ doc.device }}</h5>
+
+
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    <div class="row justify-content-md-center">
+                        <h2 style="font-weight: 100;">Videos</h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-6">
+                    {% for doc in videos %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>
+                                    <a href="https://uploader.s3.fr-par.scw.cloud/media/{{ doc.upload }}"
+                                       style="color: #e63946; text-decoration: none" data-toggle="tooltip"
+                                       data-placement="top"
+                                       title="{{ doc.name }}">{{ doc.name|truncatechars:25 }}</a>
+                                    <img
+                                            src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/link_1f517.png"
+                                            width="20vw">
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <button onclick="setClipboard('{{ doc.upload }}')"
+                                        class="button" id='{{ doc.upload }}'
+                                        style="background-color: #457b9d; width: 150px; height: 40px">Copy
+                                    url
+                                </button>
+                                <hr>
+                                <h5>Date : {{ doc.uploaded_at|date:"d/m/yy - H:i" }}</h5>
+                                <h5>User : {{ doc.user }}</h5>
+                                <h5>Device : {{ doc.device }}</h5>
+
+
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
             </div>
         </div>
     </div>
-
 
 </header>
 <main>
@@ -116,27 +281,63 @@
 
 </body>
 </html>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
+
+    .col-6 {
+        padding-bottom: 20px;
+    }
+
     body {
-        background: #edf6f9;
+        font-family: 'Roboto', sans-serif;
     }
 
-    .btn {
-        display: block;
-        width: 140px;
-        height: 40px;
-        background: #1d3557;
-        color: #fff;
-        border-radius: 3px;
-        border: 0;
-        box-shadow: 0 3px 0 0 #a8dadc;
-        transition: all 0.3s ease-in-out;
-        font-size: 14px;
+    .button {
+        background-color: #0074D9;
+        border: none;
+        color: white;
+        padding: 10px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        width: 150px;
+        height: 50px;
+        border-radius: 50px;
     }
 
-    .btn:hover {
-        background: #1d3557;
-        box-shadow: 0 3px 0 0 #457b9d;
+    a:hover {
+        text-decoration: none;
+        color: white;
+    }
+
+    @media only screen and (min-width: 600px) {
+        h1 {
+            font-size: 80px;
+        }
+
+        input {
+            width: 100%;
+        }
+    }
+
+    @media screen and (min-width: 200px) and (max-width: 640px) {
+        h1 {
+            font-size: 70px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        form {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
