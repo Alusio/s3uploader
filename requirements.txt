@@ -7,7 +7,7 @@ django-pipeline==1.6.14
 django-recaptcha3==0.1.0
 django-scheduler==0.8.8
 django-webpush==0.3.1
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 pywebpush==1.9.4
 requests==2.24.0
 requests-oauthlib==1.2.0
